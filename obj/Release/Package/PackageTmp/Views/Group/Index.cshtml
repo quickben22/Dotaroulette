@@ -1,0 +1,275 @@
+﻿@model WebApplication5.Models.GroupHomeModel
+
+@{
+    ViewBag.Title = "Your team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<br />
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Unsuccessful! &nbsp;</strong>@TempData["Message"]
+    </div>
+    
+    <a href="@Url.Action("SimilarUsers", "UserProfileInfo")" class="btn btn-lg btn-info">
+        <span class="glyphicon glyphicon-stats"></span> View search statistics
+    </a>
+    <br />
+    <br />
+}
+@if (TempData["Message2"] != null)
+{
+    <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Success! &nbsp;</strong>@TempData["Message2"]
+    </div>
+}
+@if (Model.myGroup != null)
+{
+
+
+
+    <fieldset>
+        <h2>TEAM @Model.myGroup.Name</h2>
+
+        @if(Model.myMembers.Count<2)
+        { 
+        <p style="font-style:italic;font-weight:bold">You need to have at least 2 members in a team to be able to search for teammembers as a team.</p>
+        }
+            <br />
+        <div class="row">
+      
+            <div class="col-md-4">
+
+                @if (Model.myGroup.OwnerId == Model.member.MemberDetails.Id)
+                {
+                    <a href="@Url.Action("Update", new { id = Model.myGroup.Id })" class="btn btn-sm btn-primary" style="width:170px;">
+                        <span class="glyphicon glyphicon-edit"></span> Edit team data
+                    </a>
+   
+                }
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-5">
+                <table class="table table-condensed">
+                    <tr style="border-top:hidden;">
+                        <th>Positions</th>
+                        <th>Members</th>
+                        <th>Votes</th>
+                        <th style=" border-top:hidden;border-bottom:hidden;border-right:hidden">Your vote</th>
+                    </tr>
+
+                    
+
+
+                    @foreach (var item in Model.myMembers)
+                    {
+                        <tr>
+
+
+                            <td>
+                                @if (item.Role != 0)
+                                {
+
+
+                                    if (item.MemberDetails.Id == Model.myGroup.OwnerId)
+                                    {
+
+                                        <b>
+                                            @item.Role + C
+                                        </b>
+
+                                    }
+                                    else
+                                    {
+
+                                        <font>   @item.Role </font>
+
+                                    }
+
+
+
+                                }
+                                else
+                                {
+                                    <font>Not yet determined</font>
+                                }
+                            </td>
+                            @if (item.Aktivnost == 1)
+                            {
+                                <td style="color:#ffd800;">
+                                     @Html.ActionLink("Player - waiting confirmation", "Index", "UserProfileInfo", new { id = item.MemberDetails.Id }, null)
+                                </td>
+
+                                <td>  </td>
+                                <td style="border-top:hidden;border-bottom:hidden;border-right:hidden">  </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <img class="img-thumbnail" src=@item.MemberDetails.avatar_url>&nbsp;@Html.ActionLink(item.MemberDetails.UserName, "Index", "UserProfileInfo", new { id = item.MemberDetails.Id }, null)
+                                </td>
+                                <td>@item.Votes</td>
+                             
+                                <td style="border-top:hidden;border-bottom:hidden;border-right:hidden">
+
+
+
+                                    @if (Model.member.Aktivnost != 1)
+                                    {
+
+                                        <div class="editor-field">
+                                            @if (Model.member.Aktivnost == 0)
+                                            {
+                                                if (Model.member.Vote != item)
+                                                {
+                                                    using (Html.BeginForm("Vote", "Group"))
+                                                    {
+                                                        @*@Html.RadioButton("Vote", item.Id)*@
+                                                        @Html.Hidden("group_id", Model.myGroup.Id)
+                                                        @Html.Hidden("Vote", item.Id)
+
+                                                        <button type="submit" class="btn btn-sm btn-primary">
+                                                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                                                        </button>
+
+
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <button type="submit" class="btn btn-sm btn-success">
+                                                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                                                    </button>
+                                                }
+                                            }
+                                        </div>
+
+                                    }
+
+
+                                </td>
+
+                            }
+                        </tr>
+                    }
+
+                 
+
+
+
+                </table>
+            </div>
+            <div>
+                <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right"  data-content="Vote for captain. Only captain can search for members as a team, and change teams details. "><span class="glyphicon glyphicon-question-sign"></span></a>
+
+            </div>
+        </div>
+        @if (Model.myGroup.OwnerId == Model.member.MemberDetails.Id)
+        {
+            using (Html.BeginForm("Disband", "Group"))
+            {
+                @Html.Hidden("groupId", Model.myGroup.Id)
+
+                <button type="submit" class="btn btn-sm btn-danger" onclick="if(!confirm('Are you sure you want disband this team?')){return false;}">
+                    <i class="glyphicon glyphicon-trash"></i> Disband team
+                </button>
+
+
+            }
+        }
+        else
+        {
+            using (Html.BeginForm("Leave", "Group"))
+            {
+                @Html.Hidden("groupId", Model.myGroup.Id)
+
+                <button type="submit" class="btn btn-sm btn-danger" onclick="if(!confirm('Are you sure you want to leave this team?')){return false;}">
+                    <i class="glyphicon glyphicon-log-out"></i> Leave team
+                </button>
+
+
+
+            }
+        }
+
+        <hr />
+        <div class="row">
+            <div class="col-md-5">
+                @if (Model.myGroup.Language != null)
+                {
+                    <p><b>Language:</b> @Model.myGroup.Language</p>
+                }
+                else
+                {
+                    <p><b>Language:</b> not yet specified</p>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                @if (Model.myGroup.Goal != null)
+                {
+                    <p><b>Goal:</b> @Model.myGroup.Goal</p>
+                }
+                else
+                {
+                    <p><b>Goal:</b> not yet specified</p>
+                }
+
+            </div>
+        </div>
+
+        @if (Model.myGroup.About != null)
+        {
+            <hr />
+            <div class="row">
+                <div class="col-md-5">
+                    <h3>Miscellaneous Information </h3>
+                    <p> @Model.myGroup.About</p>
+                </div>
+            </div>
+        }
+    </fieldset>
+}
+else
+{
+    <div class="alert alert-info">
+        <a class="close" data-dismiss="alert">×</a>
+        You don't have a team!
+    </div>
+
+}
+
+@if ((User.IsInRole("Admin")) || (User.IsInRole("Super Admin")))
+{
+    <br />
+    @Html.ActionLink("Create New Team", "Create") <span>|</span>
+    @Html.ActionLink("Manage Team", "Manage")
+
+}
+
+@section Scripts {
+    <script>
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+
+        });
+
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-50624891-1', 'dotaroulette.com');
+        ga('send', 'pageview');
+
+
+    </script>
+}

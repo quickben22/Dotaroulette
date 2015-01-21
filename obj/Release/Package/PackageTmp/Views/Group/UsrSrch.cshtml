@@ -1,0 +1,48 @@
+﻿@model System.Collections.IList
+
+@if ((Model != null) && (Model.Count != 0))
+{
+    <br />
+    <table>
+
+
+        @foreach (WebApplication5.Models.UserProfileInfo item in Model)
+        {
+            if (item != null)
+            {
+                <tr>
+
+
+
+
+
+
+
+                    @if ((int)ViewBag.userid != item.Id && !((List<int>)ViewBag.searchResults2).Contains(item.Id))
+                    {
+                        <td>
+                            <img class="img-thumbnail" src=@item.avatar_url>&nbsp;
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </td>
+                        <td>
+
+                            <a href="@Url.Action("VRequest", "Connect", new { id = (item.Id), tId = (int)ViewBag.userid, type = (int)1, username = (string)item.UserName })" class="btn btn-sm btn-success" style="width:100px;font-size:13px">
+                                <span class="glyphicon glyphicon-earphone"></span> Invite to team
+                            </a>
+
+                        </td>
+
+
+                    }
+                </tr>
+
+            }
+        }
+    </table>
+}
+
+
+
+

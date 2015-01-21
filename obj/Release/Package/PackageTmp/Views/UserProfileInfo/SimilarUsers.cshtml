@@ -1,0 +1,231 @@
+﻿@model WebApplication5.Models.ViewModels.SimilarViewModel
+@using WebApplication5.Models.Helpers
+@{
+    ViewBag.Title = "Search statistics";
+}
+
+<h2>Search statistics</h2>
+<br />
+<h4>Here you can experiment with your search requirements, and then see the number of players that fit those requirements.</h4>
+<br />
+
+@if (Model.search == 1)
+{
+    <h3>Your search requirements: <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Most important search requirements you set in your profile. Here you can try experimenting with them to increase your chances of finding a team."><span class="glyphicon glyphicon-question-sign"></span></a></h3>
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.search)
+
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table table-bordered" style="background-color: #161616; opacity: 0.7; text-align:center">
+                    <tr>
+                        <td>Rating</td>
+                        <td>@Model.UserRating</td>
+
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td>@Model.UserAge</td>
+
+
+                    </tr>
+                    <tr>
+                        <td>Available time</td>
+                        <td>@Model.UserTime</td>
+                    </tr>
+                    <tr>
+                        <td>Goal</td>
+                        <td>@Model.UserGoal</td>
+                    </tr>
+                    <tr>
+                        <td>Timezone</td>
+                        <td>@Model.UserTimezone</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.MinRating, "Minimum rating", new { @class = "control-label", @style = "margin-top:-3px" })
+                                @Html.DropDownListFor(model => model.User.MinRating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.User.MinRating), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.Rating, "Your rating", new { @class = "control-label", @style = "margin-top:-3px" })
+                                @Html.DropDownListFor(model => model.User.Rating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.User.Rating), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.MaxRating, "Maximum rating", new { @class = "control-label", @style = "margin-top:-3px" })
+                                @Html.DropDownListFor(model => model.User.MaxRating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.User.MaxRating), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.MinAge, "Minimum age", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.User.MinAge, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.User.MinAge), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.Age, "Your age", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.User.Age, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.User.Age), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.MaxAge, "Maximum age", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.User.MaxAge, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.User.MaxAge), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.MinTime, "Minumun time", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.User.MinTime, new SelectList(AppConstants.Sats, "SatID", "Opis", Model.User.MinTime), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.MaxTime, "Maximum time", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.User.MaxTime, new SelectList(AppConstants.Sats, "SatID", "Opis", Model.User.MaxTime), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.Goal, "Goal", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.User.Goal, new SelectList(AppConstants.Ciljs, "CiljID", "Opis", Model.User.Goal), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.User.TimeZone, "Time zone", new { @class = "control-label" })
+                                @Html.DropDownListFor(model => model.User.TimeZone, new SelectList(AppConstants.timeZones(), "TimeZID", "Opis", Model.User.TimeZone), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-10">
+                    <button type="submit"  class="btn btn-default btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> Check search
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <br />
+        <h3>No. of players that meet your search requirements: <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Only players who are searching for a team are taken into consideration."><span class="glyphicon glyphicon-question-sign"></span></a></h3>
+
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table table-bordered" style="background-color: #161616; opacity: 0.7; text-align:center">
+                    <tr>
+                        <td>Rating</td>
+                        <td>Age </td>
+                        <td>Available time </td>
+                        <td>Goal </td>
+                        <td>Timezone </td>
+                    </tr>
+                    <tr>
+                        <td>@Model.Rating</td>
+                        <td>@Model.Age</td>
+                        <td>@Model.Time</td>
+                        <td>@Model.Goal</td>
+                        <td>@Model.TimeZone</td>
+
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-1">
+                <table class="table table-bordered" style="  text-align:center; font-weight:bold; ">
+                    <tr style="background-color: #ea7e16; opacity: 0.8; ">
+                        <td>Combined</td>
+                    </tr>
+                    <tr>
+                        <td>@Model.Sve</td>
+
+
+                    </tr>
+                </table>
+
+            </div>
+            <div class="col-md-2">
+                <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="The 'Combined' number is calculated by taking into consideration only the above inputs, also it doesnt take into consideration if the players found fit each others requirements, everyone has to meet everyone's requirements or the team won't be formed."><span class="glyphicon glyphicon-question-sign"></span></a>
+            </div>
+
+        </div>
+        <div class="row">
+
+        </div>
+    }
+}
+else
+{
+    <p>You have to be in the search to see this option.</p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Chosen/chosen.jquery.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Chosen/chosen.css")" rel="stylesheet" type="text/css" />
+    <script>
+        $(".chzn-select").chosen();
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+
+        });
+    </script>
+}
+
+
+

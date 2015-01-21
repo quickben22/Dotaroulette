@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Request";
+}
+<h2>@ViewBag.naslov</h2>
+<div class="alert alert-danger">
+    <a class="close" data-dismiss="alert">×</a>
+    <p>The following information is missing:</p>
+    <ul>
+        @foreach (string itm in ((List<string>)@TempData["Message"]))
+        {
+            <li>@itm</li>
+        }
+    </ul>
+</div>
+<a href="@Url.Action("Edit", "UserProfileInfo")" class="btn btn-large btn-primary" style="width:170px;">
+    <span class="glyphicon glyphicon-edit"></span> Edit profile
+</a>
+

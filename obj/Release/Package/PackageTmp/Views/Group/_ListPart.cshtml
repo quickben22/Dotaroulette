@@ -1,0 +1,42 @@
+﻿@model IPagedList<MemberGroups>
+
+
+<div id="TeamList">
+
+    <div class="pagedList" data-otf-target="#userList">
+        @Html.PagedListPager(Model, page => Url.Action("ListTeams", new { page }),
+        PagedListRenderOptions.MinimalWithItemCountText)
+    </div>
+    @foreach (var item in Model)
+    {
+        if (item.Name == null) { continue; }
+        <div>
+            <div>
+                    
+                    @Html.ActionLink(item.Name, "Details", new { id = item.Id }, null)    &nbsp;   @item.Broj_clanova/5
+     
+            </div>
+            <hr />
+        </div>
+    }
+
+</div>
+@section Scripts {
+    <script>
+
+        var getPage = function () {
+            var $a = $(this);
+            var options = {
+                url: $a.attr("href"),
+                type: "get"
+            };
+            $.ajax(options).done(function (data) {
+                var target = $a.parents("div.pagedList").attr("data otf-target");
+                $(target).replaceWith(data);
+            });
+            return false;
+        };
+
+        $(".body-content").on("click", ".pagedList a", getPage);
+    </script>
+}

@@ -1,0 +1,8 @@
+﻿@model AssignedPositionData
+@using WebApplication5.Models.ViewModels;
+
+<fieldset >
+    @Html.HiddenFor(model => model.PositionID)
+    @Html.CheckBoxFor(model => model.Assigned)
+    @Html.DisplayFor(model => model.PositionNumber)
+</fieldset>

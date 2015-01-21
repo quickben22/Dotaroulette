@@ -1,0 +1,102 @@
+﻿@model WebApplication5.Models.ViewModels.UserProfileEditViewModel
+@using WebApplication5.Models.Helpers
+
+@{
+    ViewBag.Title = "User Profile";
+}
+@if (Model != null)
+{
+    
+
+    
+    <h2>
+        <img class="img-thumbnail" src=@Model.avatar_url2> <font>@Model.Username</font>
+    </h2>
+    <br />
+    <hr />
+    <div class="row">
+        <div class="col-md-1"><h4>MMR: </h4></div>
+        <div class="col-md-3"> <a style="margin-top:-5px;" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="MMR " data-content="This is player's ranked matchmaking rating as calculated by Valve, if the player had input it correctly :).  "><span class="glyphicon glyphicon-question-sign"></span></a></div>
+    </div>
+    <p>@Model.Rating</p>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-1"><h4>Positions: </h4></div>
+        <div class="col-md-3"> <a style="margin-top:-5px;" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Positions" data-content="Postions this player can play. 1 - carry, 2-mid, 3-offlane, 4-jungler/support, 5-support  "><span class="glyphicon glyphicon-question-sign"></span></a></div>
+    </div>
+    <ul>
+        @foreach (WebApplication5.Models.ViewModels.AssignedPositionData p in Model.Positions)
+        {
+            if (p.Assigned)
+            {
+                <li>
+                    @p.PositionNumber
+                </li>
+            }
+        }
+    </ul>
+
+
+    <hr />
+    <div class="row">
+        <div class="col-md-1"><h4>Languages: </h4></div>
+        <div class="col-md-3"> <a style="margin-top:-5px;" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Languages" data-content="Languages this player can speak."><span class="glyphicon glyphicon-question-sign"></span></a></div>
+    </div>
+    <ul>
+        @foreach (var v in Model.LangPopis)
+        {
+            if (v.Selected)
+            {
+                <li>
+                    @v.Text
+                </li>
+            }
+        }
+    </ul>
+    <hr />
+    <div class="row">
+        <div class="col-md-1"><h4>Goal: </h4></div>
+        <div class="col-md-3"> <a style="margin-top:-5px;" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Goal " data-content="Players goals and ambitions."><span class="glyphicon glyphicon-question-sign"></span></a></div>
+    </div>
+    if (Model.Goal > 0)
+    {
+        <p> @AppConstants.Ciljs[Model.Goal - 1].Opis</p>
+    }
+    <hr />
+    if (@Model.Email != null)
+    {
+        <h4>Email:</h4>
+        <p> @Model.Email</p>
+        <hr />
+    }
+     if (@Model.About != null)
+    {
+        <h4>Personal information:</h4>
+        <p> @Model.About</p>
+        <hr />
+    }
+    <h4>Searching for a team:</h4>
+    if (@Model.Search == 1)
+    {
+          <p> Yes</p>
+    }
+    else
+    { 
+           <p> No</p>
+    }
+      <hr />
+    
+    <h4>Steam profile:</h4>
+    <p><a class="btn btn-primary" href=@Model.steam_url><span class="glyphicon glyphicon-comment"></span> Contact on Steam</a></p>
+}
+
+
+@section Scripts {
+    <script>
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+
+        });
+    </script>
+}

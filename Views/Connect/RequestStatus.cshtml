@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Request";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Unsuccessful! &nbsp;</strong>@TempData["Message"]
+    </div>
+}
+@if (TempData["Message2"] != null)
+{
+    <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Success! &nbsp;</strong>@TempData["Message2"]
+    </div>
+}
+

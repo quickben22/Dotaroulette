@@ -1,0 +1,19 @@
+﻿@model IPagedList<MemberGroups>
+
+@{
+    ViewBag.Title = "All teams";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>All teams</title>
+</head>
+<body>
+
+    @Html.Partial("_ListPart", Model)
+
+</body>
+</html>

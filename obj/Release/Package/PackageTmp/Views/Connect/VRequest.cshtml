@@ -1,0 +1,54 @@
+﻿@model WebApplication5.Models.MemberRequests
+
+@{
+    ViewBag.Title = "Invite";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@if (((List<string>)ViewBag.poruka).Count < 1)
+{
+    <h2>Send a Join team Request to Member @Model.Recipientid.UserName?</h2>
+    using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <table class="tblAllBorders">
+                <tr>
+
+                    <td>
+                        @Html.HiddenFor(model => model.TargetPageid)
+                        @Html.HiddenFor(model => model.Recipientid.Id)
+                        @Html.HiddenFor(model => model.Senderid)
+
+                    </td>
+                </tr>
+
+
+
+                <tr><td colspan="2" style="text-align:right"><input type="submit" value="Send Request" class="btn btn-sm btn-success" /> </td></tr>
+            </table>
+        </fieldset>
+    }
+}
+else
+{
+
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">×</a>
+        <p>@Model.Recipientid.UserName could not be invited to the team because of the following reasons:</p>
+        @foreach (string itm in ((List<string>)ViewBag.poruka))
+            {
+            <ul>
+                <li>@itm</li>
+            </ul>
+            }
+    </div>
+    
+    <a href="@Url.Action("Index","Group")" class="btn btn-large btn-info" style="width:170px;">
+    <span class="glyphicon glyphicon-info-sign"></span> Back to details
+</a>
+}
+
+

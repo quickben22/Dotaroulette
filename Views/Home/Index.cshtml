@@ -1,0 +1,230 @@
+﻿@{
+    ViewBag.Title = "TEAM SEARCH MADE SIMPLE";
+    string returnUrl = null;
+}
+
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+
+      
+
+
+
+
+
+
+        <div class="col-md-8">
+            <center>
+                <h1 style="font-family:myFirstFont;font-weight:bold;font-size:50px">DOTA ROULETTE</h1>
+                <p class="lead" style="font-family: myFirstFont">Team search made simple!</p>
+
+
+            
+
+
+                @if (ViewBag.logiran)
+                {
+                    <img class="img-circle image" width="300" height="300" src="@Url.Content("~/Content/images/dotaroulette2.png")">
+                    <br />
+                    <br />
+                    if (ViewBag.imagrupu)
+                    {
+
+                      
+
+                            <a href="@Url.Action("Index", "Group")" class="btn btn-large btn-info" style="width:144px;">
+                                <span class="glyphicon glyphicon-info-sign"></span> Team details
+                            </a>
+
+                             <div>
+
+                            @if (ViewBag.owner)
+                            {
+                              <br />
+
+                                if (ViewBag.trazi)
+                                {
+
+                                    using (Html.BeginForm("StopSearchasGroup", "Group"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" style="width:170px" class="btn btn-large btn-primary">
+                                            <i class="glyphicon glyphicon-remove-circle"></i> Stop searching
+                                        </button>
+                                    }
+
+                               
+                                }
+                                else
+                                {
+                                    using (Html.BeginForm("SearchasGroup", "Group"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" style="width:170px" class="btn btn-large btn-primary">
+                                            <i class="glyphicon glyphicon-search"></i> Search as a team
+                                        </button>
+                                    }
+                                
+                                }
+
+                            }
+                        </div>
+
+                    }
+                    else
+                    {
+
+                        <center>
+                          
+                            @if (ViewBag.trazi)
+                            {
+                                using (Html.BeginForm("StopSearchSolo", "Group"))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" style="width:170px" class="btn btn-large btn-primary">
+                                        <i class="glyphicon glyphicon-remove-circle"></i>  Stop searching
+                                    </button>
+                                }
+                           
+                            }
+                            else
+                            {
+                                using (Html.BeginForm("SearchSolo", "Group"))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" style="width:170px" class="btn btn-large btn-primary">
+                                        <i class="glyphicon glyphicon-search"></i>  Search as solo
+                                    </button>
+                                  
+                                }
+                            }
+                        <br />
+                            <a href="@Url.Action("Create", "Group")" class="btn btn-large btn-success" style="width:144px;">
+                                <span class="glyphicon glyphicon-plus"></span> Create a team
+                            </a>
+                              </center>
+                    }
+
+
+                }
+                else
+                {
+                    using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = returnUrl }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div id="socialLoginList">
+                            <p style="margin-top:10px">
+
+                                <button style=" margin:0; padding:0; background-color:transparent;border-color:transparent;" type="submit" class="img-circle" id="Steam" name="provider" value="Steam" title="Click to log in using your Steam account">
+
+                                    <img class="img-circle image" width="300" height="300" src="@Url.Content("~/Content/images/dotaroulette2.png")">
+                                </button>
+
+                            </p>
+                        </div>
+                    }
+                    <br />
+                    <br />
+
+                    <br />
+                    <p class="lead" style="font-family: myFirstFont">Dotaroulette.com is an automated team search application. </p>
+                    <p class="lead" style="font-family: myFirstFont">Log in to start searching for a team!</p>
+                }
+
+            </center>
+
+
+
+
+        </div>
+
+
+        <div class="well  col-md-3" style="background-color:transparent">
+
+
+
+
+            <center> <h3 style="font-family: myFirstFont">Statistics</h3></center>
+            <table style="background-color: #161616; opacity: 0.7; " class="table table-bordered">
+                <tr><td style="text-align:center;font-family: myFirstFont">Users searching</td><td style="width: 70px; text-align: center">@ViewBag.upotrazi</td></tr>
+                <tr>
+                    <td style="text-align:center;font-family: myFirstFont">
+                        @Html.ActionLink("Users", "ListUsers", "UserProfileInfo")
+                    </td>
+                    <td style="width: 70px; text-align: center">@ViewBag.korisnika</td>
+                </tr>
+
+
+            </table>
+            <table style="background-color: #161616;opacity:0.7" class="table table-bordered">
+                <tr><td style="text-align:center;font-family: myFirstFont">@Html.ActionLink("Teams", "ListTeams", "Group")</td><td style="width: 70px; text-align: center">@ViewBag.timova</td></tr>
+            </table>
+
+
+
+
+            <table style="background-color: #161616; opacity: 0.7; " class="table table-bordered">
+                <tr>
+                    <th>
+                        <center style="font-family: myFirstFont">     Position</center>
+                    </th>
+                    <th style="width: 65px; text-align: center;font-family: myFirstFont">
+                        Players
+                    </th>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Carry [1]</td>
+                    <td style="text-align: center"> @ViewBag.pozicija[0]  </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Mid [2]</td>
+                    <td style="text-align:center">@ViewBag.pozicija[1]</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Offlane [3]</td>
+                    <td style="text-align: center">@ViewBag.pozicija[2]</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Support/Jungler [4]</td>
+                    <td style="text-align: center">@ViewBag.pozicija[3]</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">Support [5]</td>
+                    <td style=" text-align: center">@ViewBag.pozicija[4]</td>
+                </tr>
+            </table>
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+
+        });
+
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-50624891-1', 'dotaroulette.com');
+        ga('send', 'pageview');
+
+      
+    </script>
+}

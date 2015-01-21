@@ -1,0 +1,45 @@
+﻿@model WebApplication5.Models.ViewModels.MessagesViewModel 
+@{
+    ViewBag.Title = "Notifications";
+}
+
+<br />
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Unsuccessful! &nbsp;</strong>@TempData["Message"]
+    </div>
+}
+@if (TempData["Message2"] != null)
+{
+    <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Success! &nbsp;</strong>@TempData["Message2"]
+    </div>
+}
+
+<h2>Notifications</h2>
+
+
+<div >
+    @if ((Model.myAlerts != null) && (Model.myAlerts.Count != 0))
+    {<br />
+        @Html.Partial("BO/MyAlerts", Model.myAlerts)
+    }
+
+    @if ((Model.myRequests != null) && (Model.myRequests.Count != 0))
+    {<br />
+        @Html.Partial("BO/MyRequests", Model.myRequests)
+    }
+
+    @if (((Model.myRequests == null) || (Model.myRequests.Count == 0) )&& ((Model.myAlerts == null) || (Model.myAlerts.Count == 0)))
+    {
+        <br/>
+        <p>No new messages!</p>
+    }
+   
+</div>
+
+
+

@@ -1,0 +1,41 @@
+﻿@model IList<WebApplication5.Models.MemberRequests>
+@{int pom = 0;}
+
+<table class="tblAllBorders" style="width:320px;">
+    <tr><th>Requests:
+    <tr>
+        <td>
+            @foreach (var itm in Model)
+            {
+                <ul class="bullet-arrow">
+                    @if (itm.Senderid.Id != ViewBag.Userident)
+                    {
+                        if (itm.Type == 2)
+                        {
+                             <li> A team has been found for you Click to join @Html.ActionLink("Here", "AckRequest", "Connect", new { id = itm.Guid }, new { @class = "btn btn-sm btn-primary" }) to respond.  </li>
+                        }
+                        else
+                        {
+                            <li> You've received a request from user @itm.Senderid.UserName Click @Html.ActionLink("Here", "AckRequest", "Connect", new { id = itm.Guid }, new { @class = "btn btn-sm btn-primary" }) to respond.  </li>
+                        }
+                        pom++;
+
+                    }
+                    else
+                    {
+                        if (itm.Type != 2)
+                        {
+                            <li> You've sent a request to user @itm.Recipientid.UserName Click @Html.ActionLink("Here", "AckRequest", "Connect", new { id = itm.Guid }, new { @class = "btn btn-sm btn-info" }) to view it.  </li>
+                            pom++;
+                        }
+                    }
+                </ul>
+            }
+            @if(pom==0)
+            {
+                <p>No new requests!</p>
+                
+            }
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dota 2 application for team searching and recruitment">
+    <meta name="keywords" content="Dota 2,dota 2 team recruiting,dota 2 team recruitment,dota 2 find teammates,dota 2 find a team,dota 2 automatic team search, looking for dota 2 team, application for finding a dota 2 team,
+     dota 2 find a perfect team, dota 2 team search engine, dota 2 team search made simple, dota 2 automated team search">
+    <title style="font-family:myFirstFont;">@ViewBag.Title - DOTA ROULETTE</title>
+    <meta name="msvalidate.01" content="D41CCFBA68A146C907017F975F258389" />
+    <meta name="robots" content="index,follow">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body >
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+          
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    <li>
+                 
+                        <a href="@Url.Action("Index", "Home")" style="font-size:20px">
+                            <span class="glyphicon glyphicon-home"></span> Home
+                        </a>
+                    </li>
+                    <li>
+            
+                        <a href="@Url.Action("About", "Home")" style="font-size:20px">
+                            <span class="glyphicon glyphicon-book"></span> About
+                        </a>
+                    </li>
+                    <li>
+                      
+                        <a href="@Url.Action("Contact", "Home")" style="font-size:20px">
+                            <span class="glyphicon glyphicon-comment"></span> Contact
+                        </a>
+                    </li>
+                    <li>
+
+                        <a href="@Url.Action("Questions", "Home")" style="font-size:20px">
+                            <span class="glyphicon glyphicon-question-sign"></span> FAQ
+                        </a>
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p style="font-family:myFirstFont;">&copy; @DateTime.Now.Year - Dota Roulette</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

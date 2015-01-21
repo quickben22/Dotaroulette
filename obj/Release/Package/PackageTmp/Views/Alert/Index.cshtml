@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Collections.IList Alerts = ViewBag.myAlerts;
+    }
+
+<script src="@Url.Content("~/Content/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Unsuccessful! &nbsp;</strong>@TempData["Message"]
+    </div>
+}
+@if (TempData["Message2"] != null)
+{
+    <div class="alert alert-success">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Success! &nbsp;</strong>@TempData["Message2"]
+    </div>
+}
+<fieldset>
+    <h2>My Alerts</h2>
+    @Html.Partial("BO/MyAlerts", Alerts)
+</fieldset>
+<br />
+ Go to @Html.ActionLink("Notifications", "Index", "Messages",null, new { @class = "btn btn-sm btn-info" }).

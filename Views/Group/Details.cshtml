@@ -1,0 +1,91 @@
+﻿@model WebApplication5.Models.GroupDetailsModel
+
+@{
+    ViewBag.Title = "Team details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<fieldset>
+    @if ((Model.groupDetails != null))
+    {
+        <h3>Team @Model.groupDetails.Name</h3>
+        <br />
+        foreach (var item in Model.groupMembers)
+        {
+            <table class="table-condensed">
+                <tr>
+                    <th>Position</th>
+                    <th><center>Player</center></th>
+                </tr>
+                <tr>
+
+                    <td>
+                        @if (item.Role != 0)
+                        {@item.Role}
+                        else { <font>Not yet determined</font> }
+                </td>
+                @if (item.Aktivnost == 1)
+                {
+                    <td style="color:#ffd800;">
+                        Player - waiting confirmation
+                    </td>
+                }
+                else
+                {
+                    <td><img class="img-thumbnail" src=@item.MemberDetails.avatar_url>&nbsp;@Html.ActionLink(item.MemberDetails.UserName, "Index", "UserProfileInfo", new { id = item.MemberDetails.Id }, null)</td>
+                }
+            </tr>
+
+        </table>
+        }
+
+    }
+
+    <br /><br />
+
+    <div class="row">
+        <div class="col-md-5">
+            @if (Model.groupDetails.Language != null)
+            {
+                <p><b>Language:</b> @Model.groupDetails.Language</p>
+            }
+            else
+            {
+                <p><b>Language:</b> not yet specified</p>
+            }
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-5">
+            @if (Model.groupDetails.Goal != null)
+            {
+                <p><b>Goal:</b> @Model.groupDetails.Goal</p>
+            }
+            else
+            {
+                <p><b>Goal:</b> not yet specified</p>
+            }
+
+        </div>
+    </div>
+
+    @if (Model.groupDetails.About != null)
+    {
+        <hr />
+        <div class="row">
+            <div class="col-md-5">
+                <h3>Miscellaneous Information </h3>
+                <p> @Model.groupDetails.About</p>
+            </div>
+        </div>
+    }
+
+</fieldset>
+
+
+
+

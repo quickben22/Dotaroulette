@@ -1,0 +1,118 @@
+﻿@model WebApplication5.Models.ViewModels.ListUsersViewModel
+@using WebApplication5.Models.Helpers
+
+@{
+    ViewBag.Title = "All users";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>All users</title>
+</head>
+<body>
+    @if (ViewBag.stranica == 1)
+    {
+        if(ViewBag.logiran)
+        { 
+        <br />
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+
+
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.MinRating, "Rating equal or greater than", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.MinRating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.MinRating), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.MinRating)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.MinRating, "Rating equal or smaller than", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.MaxRating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.MaxRating), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.MaxRating)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Position, "Plays position", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.Position, new SelectList(AppConstants.pozicije, "PozicijaID", "Opis", Model.Position), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.Position)
+                </div>
+
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Goal, "Has goal", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.Goal, new SelectList(AppConstants.Ciljs, "CiljID", "Opis", Model.Goal), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.Goal)
+                </div>
+
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.TimeZone, "Is in timezone", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.TimeZone, new SelectList(AppConstants.timeZones(), "TimeZID", "Opis", Model.TimeZone), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.TimeZone)
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+
+
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.MinTime, "Plays more than", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.MinTime, new SelectList(AppConstants.Sats, "SatID", "Opis", Model.MinTime), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.MinTime)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.MaxTime, "Plays less than", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.MaxTime, new SelectList(AppConstants.Sats, "SatID", "Opis", Model.MaxTime), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.MaxTime)
+                </div>
+
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.MinAge, "Is no younger than", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.MinAge, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.MinAge), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.MinAge)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.MaxAge, "Is no older than", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.MaxAge, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.MaxAge), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.MaxAge)
+                </div>
+                <div class="col-md-2">
+                    @Html.LabelFor(model => model.Language, "Speaks language", new { @class = "control-label", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.Language, new SelectList(ViewBag.jezici, "LanguageID", "Jezik", Model.Language), new { @class = "form-control", @style = "Height:32px" })
+                    @Html.ValidationMessageFor(model => model.Language)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.CheckBoxFor(m => m.Search, new { @checked = "checked" }) Is searching
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" style="width:120px" class="btn btn-default btn-primary">
+                            <i class="glyphicon glyphicon-filter"></i> Filter
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        }
+        }
+        else
+        {
+            <br />
+            <h3>Login to use search filters</h3>
+            
+        }
+    }
+    @if (Model.users != null)
+    {
+        @Html.Partial("_ListPart", Model.users)
+    }
+</body>
+</html>

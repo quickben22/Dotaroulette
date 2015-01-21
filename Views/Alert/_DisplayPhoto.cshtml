@@ -1,0 +1,51 @@
+﻿
+<li>
+    @if (ViewBag.trazi == 1)
+    {
+
+
+        <a style="font-size:20px"><i class="glyphicon glyphicon-cog image2"></i> Searching...</a>
+
+
+
+    }
+    else
+    {
+        <a style="font-size:20px"><i class="glyphicon glyphicon-search"></i> Search off</a>
+    }
+</li>
+
+<li>
+
+    @if (ViewBag.Envelope > 0)
+    {
+
+
+
+        <a style="font-size:20px" href="@Url.Action("Index", "Messages")">
+            <i class="glyphicon glyphicon-envelope"></i><span class="badge badge-success">@ViewBag.Envelope</span>
+        </a>
+
+
+    }
+    else
+    {
+
+
+
+        <a style="font-size:20px" href="@Url.Action("Index", "Messages")">
+            <i class="glyphicon glyphicon-envelope"></i>
+        </a>
+
+
+
+    }
+
+</li>
+<li>
+
+    <a href="@Url.Action("Edit", "UserProfileInfo", new { title = "Manage" })" style="font-size:20px">
+        <img src=@ViewBag.slika> @ViewBag.name
+    </a>
+</li>
+

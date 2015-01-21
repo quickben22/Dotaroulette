@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "FAQ";
+}
+<h2>FAQ</h2>
+<br />
+<h4>I will add questions and answers here as they come to my attention.</h4>
+<br />
+<h3>Why can't I find a team?</h3>
+<br />
+
+<p>
+    The obvious answer to this question is that there are not enough players in the search pool who meet your requirements and whose requirements you meet.
+    What you can do to increase your chances is change your search requirements a bit. After you start searching you will see on your edit profile page a button
+    <b>"Search statistics"</b>. This option allows you to see how many players in the search pool meet your requirements, also there you can experiment with 
+    changing your search requirements and see how that changes the number of players meeting your requirements. The more players showing, better the chances are for you
+    to find a team. When you are happy with your new search requirements, you need to stop searching, go to your profile page, change your search requirements 
+    there, and then press "Search" again.
+    Of course the only real solution to this problem is larger number of players searching, which hopefully will also happen soon. 
+</p>
+<br />
+<h3>Is signing in through steam safe?</h3>
+<br />
+
+<p>
+   Yes :).
+   Actually Steam OpenID login is more secure than standard login because your password is not saved anywhere on the server(only Valve has it).
+   With OpenID logins you only need to be careful that you are forwarded to the right web page(i.e., check the address), for steam openid the website
+    has to start with :"https://steamcommunity.com". As is the case with this website.
+
+</p>
+
+    @section Scripts
+ {
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-50624891-1', 'dotaroulette.com');
+            ga('send', 'pageview');
+
+        </script>
+    }

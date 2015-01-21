@@ -1,0 +1,222 @@
+﻿@{
+    ViewBag.Title = "Get MMR data";
+}
+
+
+
+<h2>Get solo MMR data</h2>
+<br />
+<p>Easiest way to get player's 64bit SteamID: <a href="http://steamidfinder.ru/">http://steamidfinder.ru/</a></p>
+<br />
+<div class="form-horizontal">
+
+@if (ViewBag.podataka)
+{
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <label class="control-label col-md-3" style="margin-top:-3px">Player's 64bit SteamID:</label>
+            <div class="col-md-4">  <input type="text" disabled="disabled" id="txtSteam64" value="" class="form-control col-md-5" style="Height:20px"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <label class="control-label col-md-3" style="margin-top:-3px">Player's solo MMR(current):</label>
+            <div class="col-md-4">  <input type="text" disabled="disabled" id="txtMMR" value="5000" class="form-control col-md-5" style="Height:20px"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <label class="control-label col-md-3" style="margin-top:-3px">Get how many matches:</label>
+            <div class="col-md-4">  <input type="text" disabled="disabled" id="txtmatches" value="50" class="form-control col-md-5" style="Height:20px"></div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-1">
+        <input id="buttonStart1" type="button" disabled="disabled" value="Get player data" class="btn btn-default btn-primary" />
+    </div>
+     <div class="col-md-1">
+        <input id="buttonStart2" type="button"  value="Change search parameters" class="btn btn-default btn-primary" />
+    </div>
+    <br />
+    <br />
+    <div id="progressbar1_container">
+        <span id="progressbar1"></span>
+
+
+    </div>
+    <br />
+
+        <div class="col-md-1">
+            <input id="buttonAbort1" type="button" value="Show graph" class="btn btn-default btn-primary" onclick="location.href='@Url.Action("GetChart", "GetData")'" />
+        </div>
+        <div class="col-md-1">
+            <input id="buttonAbort2" type="button" value="Get PDF" class="btn btn-default btn-primary" onclick="location.href='@Url.Action("GetPdf", "GetData")'" />
+        </div>
+        <div class="col-md-1">
+            <input id="buttonAbort3" type="button" value="Get txt" class="btn btn-default btn-primary" onclick="location.href='@Url.Action("GetTxt", "GetData")'" />
+        </div>
+    }
+    else
+    {
+
+    
+      <div class="form-group">
+
+        <div class="col-md-10">
+            <label class="control-label col-md-3" style="margin-top:-3px">Player's 64bit SteamID:</label>
+            <div class="col-md-4">  <input type="text" id="txtSteam64" value="" class="form-control col-md-5" style="Height:20px"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <label class="control-label col-md-3" style="margin-top:-3px">Player's solo MMR(current):</label>
+            <div class="col-md-4">  <input type="text" id="txtMMR" value="3500" class="form-control col-md-5" style="Height:20px"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-10">
+            <label class="control-label col-md-3" style="margin-top:-3px">Get how many matches:</label>
+            <div class="col-md-4">  <input type="text" id="txtmatches" value="50" class="form-control col-md-5" style="Height:20px"></div>
+        </div>
+    </div>
+    
+    
+     <div class="col-md-1">
+        <input id="buttonStart1" type="button" value="Get player data" class="btn btn-default btn-primary" />
+    </div>
+      <div class="col-md-1">
+          <input id="buttonStart2" type="button" disabled="disabled" value="Change search parameters" class="btn btn-default btn-primary" />
+    </div>
+    <br />
+    <br />
+    <div id="progressbar1_container">
+        <span id="progressbar1"></span>
+
+
+    </div>
+    <br />
+    
+        <div class="col-md-1">
+            <input id="buttonAbort1" type="button" value="Show graph" disabled="disabled" class="btn btn-default btn-primary" onclick="location.href='@Url.Action("GetChart", "GetData")'" />
+        </div>
+        <div class="col-md-1">
+            <input id="buttonAbort2" type="button" value="Get PDF" disabled="disabled" class="btn btn-default btn-primary" onclick="location.href='@Url.Action("GetPdf", "GetData")'" />
+        </div>
+        <div class="col-md-1">
+            <input id="buttonAbort3" type="button" value="Get txt" disabled="disabled" class="btn btn-default btn-primary" onclick="location.href='@Url.Action("GetTxt", "GetData")'" />
+        </div>
+    }
+    <br />
+
+</div>
+
+
+
+
+
+
+@section Scripts {
+
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/progressbar-fx.js?v1")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/disabler.js?v1")" type="text/javascript"></script>
+
+
+    <script type="text/javascript">
+        var p1 = new ProgressBar();
+
+        $(document).ready(function () {
+            $("#buttonStart1").bind("click", buttonStartHandler1);
+            $("#buttonStart2").bind("click", buttonStartHandler2);
+        });
+    </script>
+
+    <script type="text/javascript">
+        function buttonStartHandler1() {
+            updateStatusProgressBar1a();
+
+            
+            p1.setInterval(1000)
+              .callback(function (status) { $("#progressbar1").text(status); },
+                        function (response) { $("#progressbar1").text(response); updateStatusProgressBar1(response); },
+                        function () { $("#progressbar1").text(""); })
+              .start("/task/dowork?repeat=" + document.getElementById('txtMMR').value + "," + document.getElementById('txtmatches').value + "," + document.getElementById('txtSteam64').value, "/task/status", "/task/abort");
+        }
+
+        //function buttonAbortHandler1() {
+        //    p1.abort();
+        //}
+
+        function updateStatusProgressBar1(response) {
+            if (response == "Search complete!") {
+                $("#buttonAbort1").toggleDisabled();
+                $("#buttonAbort2").toggleDisabled();
+                $("#buttonAbort3").toggleDisabled();
+             
+             
+            }
+            else {
+                $("#buttonStart1").toggleDisabled();
+                $("#buttonStart2").toggleDisabled();
+                $("#txtMMR").toggleDisabled();
+                $("#txtmatches").toggleDisabled();
+                $("#txtSteam64").toggleDisabled();
+            
+             
+            }
+        }
+        function updateStatusProgressBar1a() {
+            $("#progressbar1").text("Starting...");
+            $("#buttonStart1").toggleDisabled();
+            $("#buttonStart2").toggleDisabled();
+            $("#txtMMR").toggleDisabled();
+            $("#txtmatches").toggleDisabled();
+            $("#txtSteam64").toggleDisabled();
+        
+        }
+
+      
+
+        function buttonStartHandler2() {
+            updateStatus();
+
+        }
+
+
+        function updateStatus() {
+            $("#buttonStart2").toggleDisabled();
+            $("#buttonStart1").toggleDisabled();
+            $("#txtMMR").toggleDisabled();
+            $("#txtmatches").toggleDisabled();
+            $("#txtSteam64").toggleDisabled();
+            $("#buttonAbort1").toggleDisabled();
+            $("#buttonAbort2").toggleDisabled();
+            $("#buttonAbort3").toggleDisabled();
+        }
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+}

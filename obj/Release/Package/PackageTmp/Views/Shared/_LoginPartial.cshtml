@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+
+        @{ Html.RenderAction("DisplayEnvelope", "Alert"); }
+      
+        <li><a href="javascript:document.getElementById('logoutForm').submit()" style="font-size:20px">
+                <span class="glyphicon glyphicon-log-out"></span>
+            Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+    
+        <li>
+            <section id="socialLoginForm">
+                @Html.Partial("~/Views/Account/_ExternalLoginsListPartial.cshtml", new { Action = "ExternalLogin", ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+
+        </li>
+    </ul>
+}

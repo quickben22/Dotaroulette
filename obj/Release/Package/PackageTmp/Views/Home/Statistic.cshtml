@@ -1,0 +1,22 @@
+﻿@model WebApplication5.Models.ViewModels.StatisticsViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Statistic</title>
+</head>
+<body>
+    <div>
+        @foreach (KeyValuePair<string, int> pair in Model.Rating)
+        {
+            <p> @pair.Key: @pair.Value</p>
+        }
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Message and motivation</h2>
+<br />
+<h3>The goal</h3>
+<br />
+<p>The purpose of this web page is to make the team searching process a bit less painful. </p>
+<p>
+    If you are not lucky enough to have 5 real life friends who enjoy playing dota 2 as much as you do, then
+    you are forced to find a team through different means. Most common way is to search with internet, or
+    more precicely through different kinds of forums.
+    If you have ever tried to find a team this way, you are probably aware how hard that process can be.
+    The process of trying out for a team, or forming a team and searching for teammates is extremely
+    time consuming, and often frustrating, both for the team recruiting, and for the player applying.
+    Also there are always much more players searching for a team, then there are teams searching for players.
+    So why wouldn't these random players form a team themself, instead of searching for a team? Well this application
+    allows just that. All you have to do is fill out the basic information about yourself, and information concerning
+    what you are looking for in a team, and press search. If there are 4 players in a search pool whose requirements
+    you meet, and they meet your requirements you will automatically form a team. After that you will get contact
+    information of all your teammates, and that is all, everything else is left to 5 of you. Maybe you'll win the
+    next International, maybe you'll disband after a week.
+</p>
+<hr />
+<h3>How to use</h3>
+<br />
+<p>
+    There are 2 ways to use this application. 
+    <ul>
+        <li>1. You can search for a team as a solo player searching for a team . To use this option you need to fill out some basic information
+        in your profile section and press the button <b>(Search as solo)</b>.</li>
+        <li>2. The second option is to create a team, invite your friends in the team, and then search for missing team members. To use this option you must 
+        first fill out some basic information in your profile section. After that click a button <b>"create a team"</b>, and start inviting team members to a team.
+        After you have some team members there will be a new button on the home page <b>(Search as a team)</b>, and by pressing this button the application will 
+        try to automaticaly fill out the missing players in your team (from the search pool).</li>
+</ul>
+
+</p>
+<hr />
+<h3>Motivation</h3>
+<br />
+<p>
+    The motivation for building this app was mostly because I felt it could be useful to many people. I don’t have much
+    experience in web development, so it was also a good exercise, and opportunity to learn something new. This
+    application was built with Microsoft's MVC 5.
+</p>
+<p></p>
+
+@section Scripts
+ {
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-50624891-1', 'dotaroulette.com');
+        ga('send', 'pageview');
+
+    </script>
+}

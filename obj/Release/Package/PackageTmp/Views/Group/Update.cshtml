@@ -1,0 +1,185 @@
+﻿@model WebApplication5.Models.GroupHomeModel
+
+@{
+    ViewBag.Title = "Update";
+    System.Collections.IList srchResult = ViewBag.searchResults;
+}
+
+
+<br />
+
+<div class="row">
+    <div class="col-md-9">
+
+
+
+        <section id="loginForm">
+           <h2>Team @Model.myGroup.Name</h2>
+            <br />
+            <br />
+            @using (Html.BeginForm("Update", "Group", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true)
+
+
+                 @Html.LabelFor(model => model.myGroup.Name, new { @class = " control-label" })
+                <div class="form-group">
+
+                    @Html.HiddenFor(model => model.myGroup.Id)
+
+                   
+
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.myGroup.Name, new { @class = "form-control"  ,@style = "Height:20px"  })
+                        @Html.ValidationMessageFor(model => model.myGroup.Name)
+                    </div>
+                </div>
+
+
+                 @Html.LabelFor(model => model.myGroup.Url, "Acronym ", new { @class = "control-label" })
+                <div class="form-group">
+
+                   
+
+                    <div class="col-md-4">
+
+                        @Html.TextBoxFor(m => m.myGroup.Url, new { @class = "form-control", @style = "Height:20px"   })
+                        @Html.ValidationMessageFor(model => model.myGroup.Url)
+
+                    </div>
+                </div>
+                
+                
+                  @Html.LabelFor(model => model.myGroup.About, "Misc. info ", new { @class = "control-label" })
+                <div class="form-group">
+
+                   
+
+                    <div class="col-md-4">
+
+                        @Html.TextAreaFor(m => m.myGroup.About, new { @class = "form-control"   })
+                        @Html.ValidationMessageFor(model => model.myGroup.About)
+
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" style="width:120px" class="btn btn-sm btn-primary">
+                            <i class="glyphicon glyphicon-floppy-save"></i> Save
+                        </button>
+
+                    </div>
+                </div>
+
+            }
+        </section>
+    </div>
+</div>
+<br />
+<div class="row">
+            <div class="col-md-4">
+
+                <table class="table table-condensed ">
+                    <tr style="border-top:hidden;">
+                        <th>    Positions    </th>
+                        <th>    Members    </th>
+                        <th style="border-top:hidden;border-bottom:hidden;border-right:hidden">        </th>
+                    </tr>
+                    @foreach (var item in Model.myMembers)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.Role != 0)
+                                {
+                                    <font> Position: @item.Role</font>
+
+                                }
+                                else
+                                {  <font>Not yet determined</font>}
+                            </td>
+                            <td>
+                                @if (item.Aktivnost == 1)
+                                {
+                                    <font style="color:#ffd800">Player - waiting confirmation</font>
+                                }
+                                else
+                                {
+
+                                    @Html.ActionLink(item.MemberDetails.UserName, "Index", "UserProfileInfo", new { id = item.MemberDetails.Id }, null)
+
+
+                                }
+                            </td>
+                            <td style="border-top:hidden;border-bottom:hidden;border-right:hidden">
+                                @if (item.MemberDetails.Id != Model.myGroup.OwnerId)
+                                {
+                                    using (Html.BeginForm("RemoveFromGroup", "Group"))
+                                    {
+                                        @Html.Hidden("groupId", Model.myGroup.Id)
+                                        @Html.Hidden("userId", item.MemberDetails.Id)
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="if(!confirm('Are you sure you want to kick this player from team?')){return false;}">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </button>
+
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+        </div>
+
+
+<br />
+
+@if (Model.myMembers.Count < 5)
+{
+    <fieldset>
+        <h3>Invite to team</h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-9">
+                @using (Html.BeginForm("Find", "Group", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.ValidationSummary(true)
+                    <label class=" control-label" >Find By Name:</label>
+        
+
+                    @Html.HiddenFor(model => model.myGroup.Id)
+
+                    <div class="form-group">
+                        <input type="text" id="givenUsername" name="givenUsername" class="form-control col-md-4" style="Height:20px;margin-left:10px" />
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" style="width:120px" class="btn btn-sm btn-primary">
+                                <i class="glyphicon glyphicon-search"></i> Find
+                            </button>
+                        </div>
+                    </div>
+                    <div id="outpDiv">
+                        @if (srchResult != null)
+                        {
+                            @Html.Partial("UsrSrch", srchResult);
+                        }
+                    </div>
+
+                }
+            </div>
+        </div>
+        <br /><br />
+    </fieldset>
+}
+
+
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-large btn-info" style="width:170px;">
+        <span class="glyphicon glyphicon-info-sign"></span> Back to details
+    </a>
+
+</div>

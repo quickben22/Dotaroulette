@@ -1,0 +1,237 @@
+﻿@model WebApplication5.Models.ViewModels.UserProfileEditViewModel
+@using WebApplication5.Models.Helpers
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>
+    <img class="img-thumbnail" src=@Model.avatar_url2>
+    @Model.Username  &nbsp; &nbsp; <a href="@Url.Action("Index", "UserProfileInfo", new { id = Model.UserProfileID })" class="btn btn-default btn-info" style="width:120px;">
+        <span class="glyphicon glyphicon-info-sign"></span> View Profile
+    </a>
+
+</h2>
+<br />
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-warning">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Warning! &nbsp;</strong>@TempData["Message"]
+    </div>
+     <a href="@Url.Action("SimilarUsers", "UserProfileInfo")" class="btn btn-lg btn-info">
+        <span class="glyphicon glyphicon-stats"></span> View search statistics
+    </a>
+}
+else
+{
+    <h4><b>Every</b> field here is used into consideration for finding a team, so please fill the information completely and correctly.</h4>
+     <br />
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h3>Search options</h3>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.UserProfileID)
+            @Html.HiddenFor(model => model.avatar_url)
+            @Html.HiddenFor(model => model.avatar_url2)
+            @Html.HiddenFor(model => model.steam_url)
+            @Html.HiddenFor(model => model.Search)
+     
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Email, "Email", new { @class = "control-label col-md-3", @style = "margin-top:-3px" })
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control col-md-5", @style = "Height:20px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Email" data-content="Optional contact information if you want to receive notifications, or for easier communication with teammates."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.Email)
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.MinRating, "Minimum rating", new { @class = "control-label col-md-3", @style = "margin-top:-3px" })
+                    @Html.DropDownListFor(model => model.MinRating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.MinRating), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Minimum rating " data-content="This is the minimum solo MMR a player must have to be placed in the same team as you."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.MinRating)
+
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Rating, "Your rating", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.Rating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.Rating), new { @class = "form-control  col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Your rating" data-content="This is your solo MMR. I know there is a lot of controversy concerning how correct MMR is, but its still the only
+way to estimate players skill. P.S. don't exaggerate your MMR :)."><span class="glyphicon glyphicon-question-sign img-circle"></span></a>
+                    @Html.ValidationMessageFor(model => model.Rating)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.MaxRating, "Maximum rating", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.MaxRating, new SelectList(AppConstants.MMRs, "MMRID", "Opis", Model.MaxRating), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Maximum Rating" data-content="This is the maximum solo MMR a player is allowed to have to be placed in the same team as you."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.MaxRating)
+                </div>
+            </div>
+
+      
+
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Positions, "Positions", new { @class = "control-label col-md-3" })
+                    <div class=" col-md-3">
+                        @Html.EditorFor(x => x.Positions)
+                    </div>
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Positons" data-content="Postions you can, and would like to play in a team. 1 - carry, 2-mid, 3-offlane, 4-jungler/support, 5-support"><span class="glyphicon glyphicon-question-sign"></span></a>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.FavPosition, "Favorite position", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.FavPosition, new SelectList(AppConstants.pozicije, "PozicijaID", "Opis", Model.FavPosition), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Your favorite position " data-content="Position you feel most confident playing."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.FavPosition)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Languages, "Languages", new { @class = "control-label col-md-3" })
+                    @Html.ListBoxFor(model => model.Languages, Model.LangPopis as MultiSelectList, new
+                {
+                    @class = "chzn-select",
+                    data_placeholder = "Choose Languages...",
+                    Style = "width: 400px;"
+                }
+                )
+                    <a style="margin-top:0px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Languages" data-content="Languages you can speak."><span class="glyphicon glyphicon-question-sign"></span></a>
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.TimeZone, "Time zone", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.TimeZone, new SelectList(AppConstants.timeZones(), "TimeZID", "Opis", Model.TimeZone), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Time zone " data-content="Time zone you live in."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.TimeZone)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.MinTime, "Minumun time", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.MinTime, new SelectList(AppConstants.Sats, "SatID", "Opis", Model.MinTime), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Minimum time " data-content="This is the minimum time(hours/week) you would like to spend practicing with your team."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.MinTime)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.MaxTime, "Maximum time", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.MaxTime, new SelectList(AppConstants.Sats, "SatID", "Opis", Model.MaxTime), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Maximum time " data-content="This is the maximum time(hours/week) you would be able to spend practicing with your team."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.MaxTime)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Microphone, "Microphone", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.Microphone, new SelectList(AppConstants.Mics, "MicID", "Opis", Model.Microphone), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Microphone " data-content="Do you have a working microphone?"><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.Microphone)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Goal, "Goal", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.Goal, new SelectList(AppConstants.Ciljs, "CiljID", "Opis", Model.Goal), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Goal " data-content="What are your goals and ambitions?  Only players with the same goal will be matched."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.Goal)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.MinAge, "Minimum age", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.MinAge, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.MinAge), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Minimum age" data-content="The mimimum age you would like your team mates to be."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.MinAge)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.Age, "Your age", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.Age, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.Age), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Your age" data-content="How old are you?"><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.Age)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.MaxAge, "Maximum age", new { @class = "control-label col-md-3" })
+                    @Html.DropDownListFor(model => model.MaxAge, new SelectList(AppConstants.godine, "GodinaID", "Opis", Model.MaxAge), new { @class = "form-control col-md-5", @style = "Height:32px" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Maximum age " data-content="The maximum age you would like your team mates to be."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.MaxAge)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.About, "About yourself", new { @class = "control-label col-md-3" })
+                    @Html.TextAreaFor(model => model.About, new { @class = "form-control col-md-5" })
+                    <a style="margin-top:-5px" id="pop" class="btn btn-lg " data-toggle="popover" data-placement="right" data-original-title="Personal info " data-content="Optional information about yourself."><span class="glyphicon glyphicon-question-sign"></span></a>
+                    @Html.ValidationMessageFor(model => model.About)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" style="width:120px" class="btn btn-default btn-primary">
+                        <i class="glyphicon glyphicon-floppy-save"></i> Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Chosen/chosen.jquery.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Chosen/chosen.css")" rel="stylesheet" type="text/css" />
+    <script>
+        $(".chzn-select").chosen();
+        $('[data-toggle="popover"]').popover({
+            trigger: 'hover',
+
+        });
+    </script>
+}
